@@ -1,5 +1,6 @@
 # Security-Manager
 A Python program to control critical Windows system functions via Windows registry. 
+**Warning:** The program potentially modifies critical Windows registry keys. Please use it in a virtual machine before using on a hardware system, and backup registry before using.
 
 The program uses Python's winreg module to modify Windows registry values to control system functions.
 The following functions are supported:
@@ -7,6 +8,13 @@ The following functions are supported:
 2. Enable/Disable bluetooth
 3. Enable/Disable command prompt
 4. Block/Unblock facebook.com access
+
+The program should run on all systems with Windows 7, Windows 8, Windows 8.1, Windows 10, or Windows 11. To start the program, run the executable file *security_manager.exe*.
+
+#### Python version and modules 
+- Python 3.10
+- winreg (default)
+- elevate 0.1.3
 
 ## Interface
 
@@ -23,6 +31,7 @@ The program provides a numbered list interface to the user, with each number ass
 7. Enable command prompt
 8. Unblock Facebook
 
+A function can be invoked by pressing the key corresponding to that function.
 
 ## Functionality
 
@@ -62,3 +71,13 @@ Using the `OpenKey()` function of the `winreg` module, the `Policies` key is ope
 
 ## Privilege Escalation
 Since most functions like USB ports access control require modifying critical registry keys, the program requires Administrator privileges. While this can be achieved by running the Python script in an escalated Powershell or Command Prompt, a better approach is using the `elevate` module. At the beginning of the program, the `elevated` module's `elevate()` function attempts to get Administrator privileges using Windows User Account Control (UAC) prompt. 
+
+## Executable
+The Python program is converted into a Windows executable (exe) using the Pyinstaller module.
+
+## Testing
+The program was tested on Windows 10 virtual machine on VirtualBox with following specifications:
+- OS: Windows 10 version 1903 (Build 18362.356)
+- Virtual Box Version 6.1
+- RAM: 12 GB (4 GB to virtual machine)
+- Processor: Intel Core i5 3220M
