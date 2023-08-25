@@ -11,7 +11,7 @@ The following functions are supported:
 ## Interface
 
 Since most of the functions modify protected registry keys, the Python program (security_manager.py) must be run using a priviledged or admin Command Prompt or Powershell. 
-In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the [Privilege Escalation](#Privilege-Escalation) section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
+In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the [Privilege Escalation](#privilege-escalation) section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
 
 The program provides a numbered list interface to the user, with each number assigned to a particular functionality:
 1. Block USB ports
@@ -60,5 +60,5 @@ The key that controls access to websites in Google Chrome is `HKEY_LOCAL_MACHINE
 #### Working
 Using the `OpenKey()` function of the `winreg` module, the `Policies` key is opened with all access priviledges using the `KEY_ALL_ACCESS` argument. Then using the `CreateKey()` function, the keys `Google`, `Chrome` and `URLBlocklist` are created. Under the `URLBlocklist` key, the String value for domain name is set using `SetValueEx()` function.
 
-## Privlege Escalation
+## Privilege Escalation
 Since most functions like USB ports access control require modifying critical registry keys, the program requires Administrator privileges. While this can be achieved by running the Python script in an escalated Powershell or Command Prompt, a better approach is using the `elevate` module. At the beginning of the program, the `elevated` module's `elevate()` function attempts to get Administrator privileges using Windows User Account Control (UAC) prompt. 
