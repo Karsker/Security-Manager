@@ -8,7 +8,7 @@ The following functions are supported:
 3. Enable/Disable command prompt
 4. Block/Unblock facebook.com access
 
-### Interface
+## Interface
 
 Since most of the functions modify protected registry keys, the Python program (security_manager.py) must be run using a priviledged or admin Command Prompt or Powershell. 
 In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the **Admin Control** section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
@@ -24,6 +24,7 @@ The program provides a numbered list interface to the user, with each number ass
 8. Unblock Facebook
 
 
+## Functionality
 
 ### USB ports access
 The functions that control the USB ports access are `blockUSB()` and `unblockUSB()`
@@ -33,3 +34,12 @@ To enable the ports, the value of `Start` is set to 3, by the function `unblockU
 
 #### Working
 Using the `OpenKey()` function of the `winreg` module, the `USBSTOR` key is opened with all access priviledges using the `KEY_ALL_ACCESS` argument. Then using the `SetValueEx()` function, the value of the `Start` DWORD is set to 3 for enabling, and to 4 for disabling the USB ports.
+
+### Bluetooth Control
+The functions that control bluetooth are `enableBluetooth()` and `disableBluetooth()`. 
+The key that controls bluetooth is `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth`
+To enable bluetooth, the value of `value` DWORD is set to 2, while to disable bluetooth, the value is set to 0.
+After using the `disableBluetooth()` function, Bluetooth becomes inaccessible, and the Bluetooth controls would be greyed out in the Windows Settings.
+
+#### Working
+Using the `OpenKey()` function of the `winreg` module, the `AllowBluetooth` key is opened with all access priviledges using the `KEY_ALL_ACCESS` argument. Then using the `SetValueEx()` function, the value of the `value` DWORD is set to 2 for enabling, and to 0 for disabling Bluetooth.
