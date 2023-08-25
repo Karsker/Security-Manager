@@ -11,7 +11,7 @@ The following functions are supported:
 ## Interface
 
 Since most of the functions modify protected registry keys, the Python program (security_manager.py) must be run using a priviledged or admin Command Prompt or Powershell. 
-In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the **Admin Control** section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
+In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the [Privilege Escalation](#Privilege-Escalation) section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
 
 The program provides a numbered list interface to the user, with each number assigned to a particular functionality:
 1. Block USB ports
@@ -56,3 +56,9 @@ Using the `OpenKey()` function of the `winreg` module, the `Windows` key is open
 At the time of writing this document, no method is known to block access to a website across all browsers, that is, across the whole OS, using registry. Hence, for this project, only Google Chrome is blocked from accessing a website. The program controls only access to facebook.com, but the function can be updated to block any website in Google Chrome.
 
 The key that controls access to websites in Google Chrome is `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\URLBlocklist`. By default, a fresh install of Google Chrome does not create the `Google` key under `Policies`. So it must be created along with the subkeys `Chrome` and `URLBlocklist`. Under the `URLBlocklist` key, a new String value is created with name as the serial number of the website, and value as the domain name. Since the program only handles facebook.com, the value created is `1` with value `facebook.com` (handled by `blockFacebook()`). To remove the block, this value must be deleted (handled by `unblockFacebook()`).
+
+#### Working
+Using the `OpenKey()` function of the `winreg` module, the `Policies` key is opened with all access priviledges using the `KEY_ALL_ACCESS` argument. Then using the `CreateKey()` function, the keys `Google`, `Chrome` and `URLBlocklist` are created. Under the `URLBlocklist` key, the String value for domain name is set using `SetValueEx()` function.
+
+## Privlege Escalation
+Since most functions like USB ports access control require modifying critical registry keys, the program requires Administrator privileges. While this can be achieved by running the Python script in an escalated Powershell or Command Prompt, a better approach is using the `elevate` module. At the beginning of the program, the `elevated` module's `elevate()` function attempts to get Administrator privileges using Windows User Account Control (UAC) prompt. 
