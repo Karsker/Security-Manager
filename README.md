@@ -48,3 +48,11 @@ Using the `OpenKey()` function of the `winreg` module, the `AllowBluetooth` key 
 The functions that control access to Command Prompt are `enableCMD()` and `disableCMD()`.
 By defaut, the keys to control the access to Command Prompt do not exist in the registry. The key `System` must be created under `HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows`.
 Under the newly created key, a new DWORD value `DisableCMD` is created and is set to 2, to disable Command Prompt. To enable Command Prompt again, either the value can be deleted or set to 0. 
+
+#### Working
+Using the `OpenKey()` function of the `winreg` module, the `Windows` key is opened with all access priviledges using the `KEY_ALL_ACCESS` argument. Then using the `CreateKey()` function, the key `System` is created. Under the newly created key, the value for `DisableCMD` is set to 2 or 0 depending on the function, using the `SetValueEx()` function. The value is automatically added if it doesn't exist.
+
+### Access to Facebook website (or any other website)
+At the time of writing this document, no method is known to block access to a website across all browsers, that is, across the whole OS, using registry. Hence, for this project, only Google Chrome is blocked from accessing a website. The program controls only access to facebook.com, but the function can be updated to block any website in Google Chrome.
+
+The key that controls access to websites in Google Chrome is `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\URLBlocklist`. By default, a fresh install of Google Chrome does not create the `Google` key under `Policies`. So it must be created along with the subkeys `Chrome` and `URLBlocklist`. Under the `URLBlocklist` key, a new String value is created with name as the serial number of the website, and value as the domain name. Since the program only handles facebook.com, the value created is `1` with value `facebook.com` (handled by `blockFacebook()`). To remove the block, this value must be deleted (handled by `unblockFacebook()`).
