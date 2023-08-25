@@ -1,6 +1,8 @@
 # Security-Manager
 A Python program to control critical Windows system functions via Windows registry. 
+
 **Warning:** The program potentially modifies critical Windows registry keys. Please use it in a virtual machine before using on a hardware system, and backup registry before using.
+
 
 The program uses Python's winreg module to modify Windows registry values to control system functions.
 The following functions are supported:
@@ -19,7 +21,7 @@ The program should run on all systems with Windows 7, Windows 8, Windows 8.1, Wi
 ## Interface
 
 Since most of the functions modify protected registry keys, the Python program (security_manager.py) must be run using a priviledged or admin Command Prompt or Powershell. 
-In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the [Privilege Escalation](#privilege-escalation) section. Adter gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
+In case the user runs the program in a normal Command Prompt or Powershell, the program automatically asks for Admin control using the UAC prompt. This is discussed in the [Privilege Escalation](#privilege-escalation) section. After gaining Admin control, the user must press S to start and access the functions list. To quit the program, any key other than S may be pressed. This prompt is displayed after every function execution.
 
 The program provides a numbered list interface to the user, with each number assigned to a particular functionality:
 1. Block USB ports
